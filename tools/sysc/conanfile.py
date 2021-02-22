@@ -1,0 +1,12 @@
+# dir sysc is a editable conan workspace.
+
+editables:
+    say/0.1@user/testing:
+        path: say
+    hello/0.1@user/testing:
+        path: hello
+    chat/0.1@user/testing:
+        path: chat
+layout: layout_gcc
+workspace_generator: cmake
+root: chat/0.1@user/testing
