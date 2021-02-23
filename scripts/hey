@@ -10,7 +10,7 @@ quiet_cd() {
 HEY_FILE_DIRECTORY=$(quiet_cd "$(dirname ${BASH_SOURCE[0]})" && pwd -P)
 HEY_FILE=$HEY_FILE_DIRECTORY/$(basename "${BASH_SOURCE[0]}")
 HEY_PREFIX=${HEY_FILE%/*/*}
-HEY_LIBRARY=$HEY_PREFIX/Library
+HEY_LIBRARY=$HEY_PREFIX
 
 # A depth of 1 means this command was directly invoked by a user.
 # Higher depths mean this command was invoked by another Hey command.
