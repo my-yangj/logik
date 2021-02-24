@@ -22,5 +22,5 @@ continuous integraion
 - jenkins multi-branch task
 
 inspired by,
-- tymonx/logic
-- google/opentitan
+- tymonx/logic https://github.com/tymonx/logic
+- google/opentitan 
