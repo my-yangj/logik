@@ -23,4 +23,4 @@ continuous integraion
 
 inspired by,
 - tymonx/logic https://github.com/tymonx/logic
-- google/opentitan 
+- google/opentitan https://github.com/lowRISC/opentitan
