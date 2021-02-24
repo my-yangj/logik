@@ -1,5 +1,5 @@
 # logik
-logik maintains a group of scripts to build HDL design with cmake. The compiled model is for simulation on simulator or on fpga.
+logik maintains a group of scripts to build HDL design with cmake? meson?. The compiled model is for simulation on simulator or on fpga.
 logik includes h/w verification components,
 - systemc based simulation core libraries, 
 - BFM (drivers and monitors) to connect with hw,
