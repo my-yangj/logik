@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#logik is the script to invoke the scripts for logik environment.  logik commands are grouped into subdirs.
+#cmds: generic script
+#sim: simulation model build and run
+#env: environment module init, setup
+
 #change bash default to be posix compatible
 set +o posix
 
