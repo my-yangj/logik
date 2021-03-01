@@ -1,0 +1,104 @@
+#!/bin/bash
+
+#change bash default to be posix compatible
+set +o posix
+
+quiet_cd() {
+  cd "$@" >/dev/null
+}
+
+LOGIK_FILE_DIRECTORY=$(quiet_cd "$(dirname ${BASH_SOURCE[0]})" && pwd -P)
+LOGIK_FILE=$LOGIK_FILE_DIRECTORY/$(basename "${BASH_SOURCE[0]}")
+LOGIK_PREFIX=${LOGIK_FILE%/*/*}
+LOGIK_LIBRARY=$LOGIK_PREFIX
+
+# A depth of 1 means this command was directly invoked by a user.
+# Higher depths mean this command was invoked by another Logik command.
+# bash $(()) is used for arithmatic calculation
+export LOGIK_COMMAND_DEPTH=$((LOGIK_COMMAND_DEPTH + 1))
+
+#print Error prefix and then error message, if no input parameter then use cat
+onoe() {
+  if [[ -t 2 ]] # check whether stderr is a tty.
+  then
+    echo -ne "\033[4;31mError\033[0m: " >&2 # highlight Error with underline and red color
+  else
+    echo -n "Error: " >&2
+  fi
+
+  if [[ $# -eq 0 ]]
+  then
+    /bin/cat >&2
+  else
+    echo "$*" >&2
+  fi
+}
+
+odie() {
+  onoe "$@"
+  exit 1
+}
+
+safe_cd() {
+  cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
+}
+
+logik() {
+  "$LOGIK_FILE" "$@"
+}
+
+# Many Pathname operations use getwd when they shouldn't, and then throw
+# odd exceptions. Reduce our support burden by showing a user-friendly error.
+if [[ ! -d "$(pwd)" ]]
+then
+  odie "The current working directory doesn't exist, cannot proceed."
+fi
+
+if [[ "$1" = -v ]]
+then
+  # Shift the -v to the end of the parameter list
+  shift
+  set -- "$@" -v
+fi
+
+if [[ $# = 0 ]]
+then 
+  LOGIK_HELP="1"
+else 
+  for arg in "$@"
+  do
+    if [[ $arg = "--help" || $arg = "-h" || $arg = "--usage" || $arg = "-?" ]]
+    then
+      LOGIK_HELP="1"
+      break
+    fi
+  done
+fi
+
+LOGIK_COMMAND="$1"
+if [[ $LOGIK_HELP = "1" ]]
+then
+  LOGIK_COMMAND="--help"
+fi
+shift
+
+#source rather than executing to ensure the entire file is read into memory
+#before it run, avoid the issue if bash script is updated at the same time as being run
+#1. when the command has .sh suffix, evaluate it with the remain command line argument 
+#2. otherwise execute it from logik.rb
+LOGIK_BASH_COMMAND="$LOGIK_LIBRARY/cmd/$LOGIK_COMMAND.sh"
+if [[ -f "$LOGIK_BASH_COMMAND" ]]
+then
+  source "$LOGIK_BASH_COMMAND"
+else
+  #check if ruby available, script, whic
+  #user need to use logik env to init or boot env first
+  if [[ -z "$LOGIK_RUBY_PATH" ]]
+  then
+    odie "Please setup env first, e.g. logik env --init" 
+  fi   
+
+  # Unshift command back into argument list (unless argument list was empty).
+  set -- "$LOGIK_COMMAND" "$@"
+  { exec "$LOGIK_RUBY_PATH" -W0 "$LOGIK_LIBRARY/logik.rb" "$@"; }
+fi
