@@ -12,8 +12,7 @@ systemc core libraries including,
 - crave
 - fc4sc
 
-Meson
-Meson is our hw build tool,
+meson is our hw build tool,
 - in python and easier to learn/use than cmake
 - modular with lots of modules, supprot subprojects
 - built in unit test support
@@ -32,7 +31,7 @@ To use meson, the project's dir has been arranged as below, dir /hw is for chip 
   1. Meson can use the CMake find_package() function to detect dependencies with the builtin Find<NAME>.cmake modules and exported project configurations
   2. As a part of the software configuration, you could get extra data by running external commands.
   
-Unit test:
+unit test:
 - Meson comes with a fully functional unit test system. To use it simply build an executable and then use it in a test.
 - GTest and GMock come as sources that must be compiled as part of your project.
 - This is a valid JUnit XML description of all tests run. It is not streamed out, and is written only once all tests complete running.
@@ -57,6 +56,7 @@ chip level: whole chip with bootcode/kernel/driver;
 - test devices controlled by a host program (e.g.qemu) w/ test (now. guest os) 
 
 tlm-brige:
+
 tlm-transactor:
 - target side, tunnel/bridge a protocol e.g. axi into tilelink
 - transport tilelink over ethernet/pcie e.g. ommixtend
@@ -72,10 +72,10 @@ qemu:
 toolchain:
 
 dtb:
-generated from hw
+- generated from hw
 
 kernel:
-rootbuild
+- rootbuild
 
 device driver:
 
