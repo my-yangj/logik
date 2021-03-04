@@ -33,10 +33,42 @@ Unit test:
 - This is a valid JUnit XML description of all tests run. It is not streamed out, and is written only once all tests complete running.
 - When tests use the gtest protocol Meson will inject arguments to the test to generate it's own JUnit XML, which Meson will include as part of this XML file.
 
-continuous integraion
+continuous integraion:
 - nextflow as jenkins steps,
 - jenkins multi-branch task
 
+# hw verif
+
+block level:
+- sv based uvm
+- formal
+ip or subsystem level: (ip has standard/supported interface; a subsystem is a group of related ip). 
+- systemc tlm standalone simulation
+- qemu cosim w/ tlm-bridge; coemu w/ tlm-transactor
+chip level:
+- simulate/emulate with bootcode, proxy-kernel, device driver; virtual bringup
+- cosim/coemu for device model, save-restore, virtual logic analyzer. (through host server or paired qemu?)
+tlm-transactor:
+- split transaction -> transaction packer/unpacker into ethernet/pcie payload (omniXtend?)
+
+# sw
+
+qemu:
+- qemu emulates cpu, and other devices which are in developping otherwise not available
+- qemu emulates cpu, but other devices are available thourgh tlm cosim/coemu
+- qemu emulates nothing in the design, it provides device models to the simulated/emulated design, such as a bus monitor.
+
+toolchain:
+dtb:
+from arch/hw side
+
+kernel:
+rootbuild
+
+device driver:
+
+# reference
 inspired by,
 - tymonx/logic https://github.com/tymonx/logic
 - google/opentitan https://github.com/lowRISC/opentitan
+- xilinx/systemctlm https://github.com/Xilinx/libsystemctlm-soc
