@@ -1,25 +1,30 @@
 # logik
-logik maintains a group of scripts to build HDL design with meson. The compiled model is for simulation on simulator or on fpga.
-logik includes h/w verification components,
-- systemc based simulation core libraries, 
-- BFM (drivers and monitors) to connect with hw,
-- high level simulation models,
-- scripts for documentation, design automation, flow control and etc
+logik maintains a group of tools to build hw design with meson. The generated design model can run on simulator or on fpga.
+logik includes some verification components,
+- systemc simulation core libraries, e.g. uvm-systemc
+- bfm (drivers/monitors, tlm-bridges/transactors) to interconnect with design
+- high level simulation models, virtual analyzers
+- scripts for design, documention, devop, and etc
 
 systemc core libraries including, 
-- systemc 2.3.3
+- systemc 2.3.2
 - systemc-uvm
 - crave
 - fc4sc
 
 Meson
-Meson is selected as hw build tool. 
-- Meson is in python and easier to learn than cmake
-- Meson is modular with lots of build modules available and it supprot subprojects
-- Meson buit with unit test
-To accomodate it, the project's dir has been made as below, Dir hw is the chips' dir and under hw, there is main build file meson.build. hw can has several chip dirs with each named after chip's name. Subprojects directory contains IPs. All IPs are under subprojects directory, each can be self contained and can checkout separately.
-- Meson allows you to take any other Meson project and make it a part of your build
-- Meson has predefined location for subprojects.
+Meson is our hw build tool,
+- in python and easier to learn/use than cmake
+- modular with lots of modules, supprot subprojects
+- built in unit test support
+- built in package support
+
+To use meson, the project's dir has been arranged as below, dir /hw is for chip level and there is main build file meson.build. 
+/hw can has several dirs for different chip configuration (named after chip's name). /subprojects directory contains IPs, each /hw/ip could be self contained and could checkout separately.
+
+/from meson manual/
+- meson allows you to take any other meson project and make it a part of your build
+- meson has predefined location for subprojects.
   1. All subprojects must be inside subprojects directory. 
   2. The subprojects directory must be at the top level of your project. 
   3. Subproject declaration must be in your top level meson.build.
@@ -40,27 +45,34 @@ continuous integraion:
 # hw verif
 
 block level:
-- sv based uvm
+- sv/sysc uvm
 - formal
-ip or subsystem level: (ip has standard/supported interface; a subsystem is a group of related ip). 
-- systemc tlm standalone simulation
-- qemu cosim w/ tlm-bridge; coemu w/ tlm-transactor
-chip level:
-- simulate/emulate with bootcode, proxy-kernel, device driver; virtual bringup
-- cosim/coemu for device model, save-restore, virtual logic analyzer. (through host server or paired qemu?)
+
+ip/subsystem level: ip is with standard interfaces; subsystem is a group of related ips. 
+- sysc tlm standalone, sysc uvm
+- qemu co-sim/emu with tlm-bridge/transactor
+
+chip level: whole chip with bootcode/kernel/driver; 
+- add-on interconnected test devices, virtual logic analyzers; controlled them w/ tlm-bridge/tlm-transactor
+- test devices controlled by a host program (e.g.qemu) w/ test (now. guest os) 
+
+tlm-brige:
 tlm-transactor:
-- split transaction -> transaction packer/unpacker into ethernet/pcie payload (omniXtend?)
+- target side, tunnel/bridge a protocol e.g. axi into tilelink
+- transport tilelink over ethernet/pcie e.g. ommixtend
+- in host side, analyze payloads and restore them into original protocols. 
 
 # sw
 
 qemu:
-- qemu emulates cpu, and other devices which are in developping otherwise not available
-- qemu emulates cpu, but other devices are available thourgh tlm cosim/coemu
-- qemu emulates nothing in the design, it provides device models to the simulated/emulated design, such as a bus monitor.
+- qemu emulates cpu, and other devices 
+- qemu emulates cpu, but other devices are thourgh tlm cosim/coemu
+- qemu emulates nothing, but controls test devices/models connected with /embedded in design, e.g. connected uart or bus monitor.
 
 toolchain:
+
 dtb:
-from arch/hw side
+generated from hw
 
 kernel:
 rootbuild
@@ -72,3 +84,4 @@ inspired by,
 - tymonx/logic https://github.com/tymonx/logic
 - google/opentitan https://github.com/lowRISC/opentitan
 - xilinx/systemctlm https://github.com/Xilinx/libsystemctlm-soc
+
