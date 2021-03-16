@@ -10,3 +10,9 @@
 [submodule "tools/sysc/fc4sc"]
 	path = tools/sysc/fc4sc
 	url = https://github.com/amiq-consulting/fc4sc
+[submodule "sites/hugo/themes/docsy"]
+	path = sites/hugo/themes/docsy
+	url = https://github.com/google/docsy
+[submodule "sites/hugo-docsy-example"]
+	path = sites/hugo-docsy-example
+	url = https://github.com/google/docsy-example
