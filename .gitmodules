@@ -4,3 +4,6 @@
 [submodule "tools/sysc/systemc-uvm"]
 	path = tools/sysc/systemc-uvm
 	url = https://github.com/jeras/SystemC-UVM
+[submodule "tools/sysc/crave"]
+	path = tools/sysc/crave
+	url = https://github.com/agra-uni-bremen/crave
