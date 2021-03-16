@@ -7,3 +7,6 @@
 [submodule "tools/sysc/crave"]
 	path = tools/sysc/crave
 	url = https://github.com/agra-uni-bremen/crave
+[submodule "tools/sysc/fc4sc"]
+	path = tools/sysc/fc4sc
+	url = https://github.com/amiq-consulting/fc4sc
