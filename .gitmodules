@@ -1,3 +1,6 @@
 [submodule "tools/sysc/libsystemctlm-soc"]
 	path = tools/sysc/libsystemctlm-soc
 	url = https://github.com/Xilinx/libsystemctlm-soc
+[submodule "tools/sysc/systemc-uvm"]
+	path = tools/sysc/systemc-uvm
+	url = https://github.com/jeras/SystemC-UVM
