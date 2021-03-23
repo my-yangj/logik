@@ -1,15 +1,11 @@
-# 
-check if flatpat can be used to build a bundle of s/w together.
-it is easier to track the s/w lifecycle and release compiled the conan package system.
-
-- flatpat need a runtime base
-- the packaged s/w will in a sandbox
-- how to invoke commandline utils?
-
 # flatpat
 
->>>> from flatpat.org
-Flat pack a bundle of program together into a single app should be possible.
+consider if flatpat can be used to replace conan. 
+- it is easier to track the s/w lifecycle and release compiled the conan package system.
+- flatpat need a runtime base
+
+see. flatpat.org
+pack a bundle of program together into a single flatpat app should be possible, with software inter-dependence being resolved. 
 
 ```flatpak run --command=sh --devel <application-id>```
 This creates a sandbox for the application with the given ID and, instead of running the application, runs a shell inside the sandbox. 
