@@ -5,3 +5,9 @@ nest github repo at belwo for test dut, reference it as source dir. build and ru
 - https://github.com/alexforencich/verilog-ethernet
 - https://github.com/alexforencich/verilog-pcie
 - https://github.com/lowRISC/ibex
+
+
+As I need a dir to put file build.meson so that it be recognized by meson as a subproject, an extra dir need created. e.g. 
+alexforencich-verilog-axi/nested (a dir is created to hold the nested repo, i just put build.meson in the parent dir).
+                         /build.meson
+                         /ci/regress.nf: dir to hold the ci flows. create a jenkinsfile at top level in a branch to run ip regression. the jenkins will run the flow here.
