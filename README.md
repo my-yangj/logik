@@ -12,14 +12,14 @@ systemc core libraries including,
 - crave
 - fc4sc
 
-meson is our hw build tool,
+meson is our hw build tool instead of cmake,
 - in python and easier to learn/use than cmake
 - modular with lots of modules, subprojects
 - unit test support
 - builtin package support
 
 To use meson, the project's dir has been arranged as below, dir /hw is for chip level and there is main build file meson.build. 
-/hw can has several dirs for different chip configuration (named after chip's name). /subprojects directory contains IPs, each /hw/ip could be self contained and could checkout separately.
+/hw can has several dirs for different chip configuration (named after chip's name). /subprojects directory contains IPs, each /hw/ip could be self-contained and could checkout separately.
 
 /from meson manual/
 - meson allows you to take any other meson project and make it a part of your build
@@ -43,8 +43,8 @@ continuous integraion:
 
 # hw verif
 
-block level:
-- sv/sysc uvm
+in block level:
+- sv/sysc/python uvm
 - formal
 
 ip/subsystem level: ip is with standard interfaces; subsystem is a group of related ips. 
@@ -62,6 +62,8 @@ tlm-transactor:
 - transport tilelink over ethernet/pcie e.g. ommixtend
 - in host side, analyze payloads and restore them into original protocols. 
 
+(xtor is for fpga/emu cosim; bridge is s/w cosim which dont require a signal transport e.g. pcie/ethernet)
+
 # sw
 
 qemu:
@@ -78,6 +80,10 @@ kernel:
 - rootbuild
 
 device driver:
+
+# doc
+- projects' doc are in sphinx (extracted from phython, or converted from doxygen)
+- website is in hugo (also static but more goodlooking?)
 
 # reference
 inspired by,
