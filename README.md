@@ -44,16 +44,19 @@ continuous integraion:
 # hw verif
 
 in block level:
-- sv/sysc/python uvm
+- cocotb
 - formal
 
 ip/subsystem level: ip is with standard interfaces; subsystem is a group of related ips. 
-- sysc tlm standalone, sysc uvm
-- qemu co-sim/emu with tlm-bridge/transactor
+- sv uvm
+- sysc cosim
+- qemu cosim/emu
 
 chip level: whole chip with bootcode/kernel/driver; 
-- add-on interconnected test devices, virtual logic analyzers; controlled them w/ tlm-bridge/tlm-transactor
-- test devices controlled by a host program (e.g.qemu) w/ test (now. guest os) 
+- sysc cosim
+- qemu cosim/emu
+  cosim mode & firesim mode (see sw/qemu).
+  firesim mode adds interconnected test devices, virtual logic analyzers and etc which could controlled them w/ tlm-bridge/tlm-transactor
 
 tlm-brige:
 
