@@ -1,3 +1,5 @@
+# how about using flatpat so that s/w lifecycle can be controlled?
+
 # dir sysc is a editable conan workspace.
 
 editables:
