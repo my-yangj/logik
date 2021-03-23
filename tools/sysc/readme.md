@@ -7,6 +7,8 @@ it is easier to track the s/w lifecycle and release compiled the conan package s
 - how to invoke commandline utils?
 
 # flatpat
+
+>>>> from flatpat.org
 Flat pack a bundle of program together into a single app should be possible.
 
 ```flatpak run --command=sh --devel <application-id>```
@@ -17,3 +19,9 @@ For example, to run the application with gdb:
 $ gdb /app/bin/<application-binary>
 This works because the --devel option tells Flatpak to use the SDK as the runtime, which includes debugging tools like gdb. 
 The --devel option also adjusts the sandbox setup to enable debugging.
+
+It is also possible to get a shell inside an application sandbox without having to install it. 
+This is done using flatpak-builder’s --run option:
+
+$ flatpak-builder --run <build-dir> <manifest> sh
+This sets up a sandbox that is populated with the build results found in the build directory, and runs a shell inside it.
