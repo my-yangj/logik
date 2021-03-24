@@ -1,4 +1,5 @@
 # logik
+## intro
 logik maintains a group of tools to build hw design and the generated design model can run on simulator or on fpga.
 logik includes some verification components,
 - systemc simulation core libraries, e.g. uvm-systemc
@@ -6,19 +7,23 @@ logik includes some verification components,
 - high level simulation models, virtual analyzers
 - scripts for design, documention, devop, and etc
 
+## sysc
 systemc core libraries including, 
 - systemc 2.3.2
 - systemc-uvm
 - crave
 - fc4sc
 
+## meson
 meson is the hw build tool
-- meson support mixed build, which takes results from external build system as a build dependence. This way build tool can be reused if it is already available. Especially the cmake modules taken from 'logic' to compile HDL files. 
-- meson also support the concept of subprojects, and a complex project be partitioned into a hierarchical of directories. Each sub-directory holds a subproject and the parent directory holds the main project. Meson supports a single level of subjects, so when the project has a subproject which further has sub-subprojects, meson will not track the dependency between sub-sub projects and the main project.
+- meson support mixed build, which takes results from external build system as a build dependence. This way build tool can be reused if it is already available. Especially the cmake modules taken from 'tymonx/logic' to compile HDL files. 
+- meson also support the concept of subprojects, and a complex project be partitioned into a hierarchical of directories. Each sub-directory holds a subproject and the parent directory holds the main project. Subprojects can use other subprojects, but all subprojects must reside in the top level subprojects directory. Recursive use of subprojects is not allowed, though, so you can't have subproject a that uses subproject b and have b also use a.
+
 - the project's dir has been arranged as below to use meson
   - dir /hw is for chip level and there is main build file meson.build. 
   - /hw can has several dirs for different chip configuration (named after chip's name). and its /subprojects directory contains IPs (each /hw/ip could be self-contained and could checkout separately)
 
+## ref
 /from meson manual/
 - meson allows you to take any other meson project and make it a part of your build
 - meson has predefined location for subprojects.
@@ -28,13 +33,13 @@ meson is the hw build tool
 - Meson modularity
   1. Meson can use the CMake find_package() function to detect dependencies with the builtin Find<NAME>.cmake modules and exported project configurations
   2. As a part of the software configuration, you could get extra data by running external commands.
-  
-unit test:
-- Meson comes with a fully functional unit test system. To use it simply build an executable and then use it in a test.
-- GTest and GMock come as sources that must be compiled as part of your project.
-- This is a valid JUnit XML description of all tests run. It is not streamed out, and is written only once all tests complete running.
-- When tests use the gtest protocol Meson will inject arguments to the test to generate it's own JUnit XML, which Meson will include as part of this XML file.
+- unit test:
+  - Meson comes with a fully functional unit test system. To use it simply build an executable and then use it in a test.
+  - GTest and GMock come as sources that must be compiled as part of your project.
+  - This is a valid JUnit XML description of all tests run. It is not streamed out, and is written only once all tests complete running.
+  - When tests use the gtest protocol Meson will inject arguments to the test to generate it's own JUnit XML, which Meson will include as part of this XML file.
 
+## ci
 continuous integraion:
 - nextflow as jenkins steps,
 - jenkins multi-branch task
