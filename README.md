@@ -39,10 +39,21 @@ meson is the hw build tool
   - This is a valid JUnit XML description of all tests run. It is not streamed out, and is written only once all tests complete running.
   - When tests use the gtest protocol Meson will inject arguments to the test to generate it's own JUnit XML, which Meson will include as part of this XML file.
 
-## ci
+## ci&cd
 continuous integraion:
-- nextflow as jenkins steps,
-- jenkins multi-branch task
+- nextflow is as jenkins steps,
+- jenkins multi-branch task 
+
+continuous deployment:
+- for simple projects with a single repo, the deployment can be done by adding 'PROD' tag or making a 'release' branch, which is good enough since the tag/release contains everything required deployment. 
+- for complex projects with multiple repo or involve multiple development team, it is often desired to setup a deployment flow. The below outlines the 'cd' process used by logik
+  - development progresses are run in parallel with one or more development repo. once ci/regression result shows the deisng is above a certain quality critiera, the repo is branched into 'release'.
+  - the change in 'release' branch triggers the deployment process. (e.g. git archieve the release branch and sent it to ostree release area; which is submited and deleted, the release is then checked-out from ostree branch w/ hard-link to save space). the release area is in ostree and is read-only to user.
+  - ip can be developped separately and released to the release area (ostree). soc which uses the ip to run simulation takes the ip from reference it at release area instead of checkout it. It is possible for debug porpuse, soc still need to checkout the ip (as a submodule and submit the config into soc debug branch). but it should be only for debug purpose, and once the debug is finished the branch should be deleted. 
+  - soc should maintain the same directory structure as in release area if it checkouts ip for debug. whether simulation script takes local ip or released ip is controllable e.g. with a environment variable of ip's base dir.
+  - release regression (sign-off for external release) takes source code from ostree release area only. we should make out-of-tree build work, hopefully. 
+  - even a single develop repo is used, different team can release their part of ip separately. e.g. using a different release tag/branch, sw and hw team use sw_release and hw_release. And for that branch, only sw part or hw part is released and copied to release area. 
+  - ostree is used for release area storage as it supports multiple branch unioned at a single repo, and it uses hard-link to save space. (to check if git can support them as well).
 
 # hw verif
 
