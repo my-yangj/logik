@@ -12,11 +12,7 @@ systemc core libraries including,
 - crave
 - fc4sc
 
-meson is our hw build tool instead of cmake,
-- in python and easier to learn/use than cmake
-- modular with lots of modules, subprojects
-- unit test support
-- builtin package support
+meson is our hw build tool and meson support mixed build (take results from other build system as a build dependence), so there are other build system has been involved. such as cmake from (logic)
 
 To use meson, the project's dir has been arranged as below, dir /hw is for chip level and there is main build file meson.build. 
 /hw can has several dirs for different chip configuration (named after chip's name). /subprojects directory contains IPs, each /hw/ip could be self-contained and could checkout separately.
